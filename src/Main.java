@@ -179,7 +179,18 @@ public class Main {
 
                             if (valor == 1) {
                                 // Acessar o catálogo de produtos
-                                cliente.accessProducts(everything);
+                                List<Produtos> tempProds = cliente.accessProducts(everything);
+                                if (tempProds != null) {
+                                    System.out.println("Acessando os produtos: ");
+                                    System.out.println("<----------------------------->");
+                                    for (Produtos produtos : tempProds) {
+                                        System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
+                                                + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+                                    }
+                                    System.out.println("<----------------------------->");
+                                } else {
+                                    System.out.println("Não há produtos disponíveis");
+                                }
                             }
                             else if (valor == 2) {
                                 // Comprar produto
@@ -217,6 +228,7 @@ public class Main {
                             }
                         }
                     }
+                    // sign in (n lembro a tradução pra ptbr)
                     else if (validar == 2) {
                         System.out.print("Digite o nome de usuário: ");
                         nomeDoCliente = scam.nextLine();
@@ -251,7 +263,18 @@ public class Main {
 
                             if (valor == 1) {
                                 // Acessar o catálogo de produtos
-                                cliente.accessProducts(everything);
+                                List<Produtos> tempProds = cliente.accessProducts(everything);
+                                if (tempProds != null) {
+                                    System.out.println("Acessando os produtos: ");
+                                    System.out.println("<----------------------------->");
+                                    for (Produtos produtos : tempProds) {
+                                        System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
+                                                + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+                                    }
+                                    System.out.println("<----------------------------->");
+                                } else {
+                                    System.out.println("Não há produtos disponíveis");
+                                }
                             }
                             else if (valor == 2) {
                                 // Comprar produto
@@ -342,7 +365,18 @@ public class Main {
                         }
                         else if (valor == 2) {
                             // Ver produtos da loja
-                            vendedor.accessProducts(loja);
+                            List<Produtos> tempProds = vendedor.accessProducts(everything);
+                            if (tempProds != null) {
+                                System.out.println("Acessando os produtos: ");
+                                System.out.println("<----------------------------->");
+                                for (Produtos produtos : tempProds) {
+                                    System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
+                                            + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+                                }
+                                System.out.println("<----------------------------->");
+                            } else {
+                                System.out.println("Não há produtos disponíveis");
+                            }
                         }
                         else if (valor == 3) {
                             continuar = false;
@@ -394,10 +428,22 @@ public class Main {
                         scam.nextLine();  // Consumir o restante da linha após nextInt()
 
                         if (valor == 1) {
-                            gerente.criarVendedor();
+                            System.out.println("Digite o nome do vendedor: ");
+                            String nomeVendedor = scam.nextLine();
+
+                            gerente.criarVendedor(nomeVendedor, everything);
                         }
                         else if (valor == 2) {
                             //Lógica para deletar conta
+                            System.out.println("Selecione o vendedor a ser removido:");
+                            int tempInd = 1;
+                            for (Vendedor tempV : everything.vendedores) {
+                                System.out.print("(" + Integer.toString(tempInd) + ") " + tempV.getNome() + " - ");
+                                tempInd++;
+                            }
+                            System.out.println();
+
+//                            gerente.deletarVendedor();
                         }
                         else if (valor == 3) {
                             gerente.calcularLucros(loja);

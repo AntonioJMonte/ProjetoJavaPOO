@@ -35,20 +35,23 @@ public class Cliente extends Usuario {
         setEmail(email);
 
         System.out.println("Conta criada com sucesso! Seja bem-vindo " + nome);*/
+
     }
 
-    public void accessProducts(CRUD crud) {
+    public List<Produtos> accessProducts(CRUD crud) {
         List<Produtos> produto = crud.produtos;
         if (produto.isEmpty()) {
-            System.out.println("Não há produtos disponíveis");
+            return null;
+//            System.out.println("Não há produtos disponíveis");
         } else {
-            System.out.println("Acessando os produtos: ");
-            System.out.println("<----------------------------->");
-            for (Produtos produtos : produto) {
-                System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
-                        + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
-            }
-            System.out.println("<----------------------------->");
+//            System.out.println("Acessando os produtos: ");
+//            System.out.println("<----------------------------->");
+//            for (Produtos produtos : produto) {
+//                System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
+//                        + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+//            }
+//            System.out.println("<----------------------------->");
+            return produto;
         }
     }
 

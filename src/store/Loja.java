@@ -7,7 +7,7 @@ public class Loja {
 
     private List<Produtos> produtos;
 
-    public Loja (List <Produtos> produto) {
+    public Loja (List<Produtos> produto) {
         this.produtos = produto;
     }
 
