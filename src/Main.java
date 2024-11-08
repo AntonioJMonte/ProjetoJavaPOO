@@ -277,7 +277,20 @@ public class Main {
 
                             if (valor == 1) {
                                 // Acessar o catálogo de produtos
-                                cliente.accessProducts(everything);
+                                try {
+                                    List <Produtos> produto = cliente.accessProducts(everything);
+                                    System.out.println("Acessando os produtos: ");
+                                    System.out.println("<----------------------------->");
+                                    for (Produtos produtos : produto) {
+                                        System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
+                                                + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+                                    }
+                                    System.out.println("<----------------------------->");
+                                }
+                                catch (RuntimeException e) {
+                                    System.out.println(e.getMessage());
+                                    System.out.println("Voltanto para o menu principal...");
+                                }
                             }
                             else if (valor == 2) {
                                 // Comprar produto
@@ -287,17 +300,40 @@ public class Main {
                                 int quantidade = scam.nextInt();
                                 scam.nextLine();  // Consumir o restante da linha
 
-                                // Buscar produto na loja e realizar a compra
-                                Produtos produtoParaComprar = loja.getProdutoPorNome(nomeProduto);
-                                if (produtoParaComprar != null) {
-                                    cliente.purchaseOption(produtoParaComprar, quantidade);
+                                Produtos produtoParaComprar = null;
+
+                                try {
+                                    // Buscar produto na loja e realizar a compra
+                                    for (int i = 0; i < everything.produtos.size(); i++) {
+                                        Produtos tempProd = everything.produtos.get(i);
+                                        if (tempProd.getNome().equals(nomeProduto)) {
+                                            produtoParaComprar = tempProd;
+                                            break;
+                                        }
+                                    }
+                                    if (produtoParaComprar != null) {
+                                        cliente.purchaseOption(produtoParaComprar, quantidade);
+                                        double total = quantidade * produtoParaComprar.getPreco();
+                                        System.out.printf("Comprando %d unidades de %s por R$ %.2f\n", quantidade, produtoParaComprar.getNome(), total);
+                                        produtoParaComprar.registrarVenda(quantidade);
+                                    }
+                                    else {
+                                        System.out.println("Produto não encontrado!");
+                                    }
                                 }
-                                else {
-                                    System.out.println("Produto não encontrado!");
+                                catch (RuntimeException e) {
+                                    System.out.println(e.getMessage());
                                 }
                             }
                             else if (valor == 3) {
                                 // Deletar conta
+                                if (cliente.deleteAccount(cliente, everything)) {
+                                    System.out.println("Conta deletada com sucesso!");
+                                }
+                                else {
+                                    System.out.println("Erro ao remover a conta!");
+                                }
+                                break;
                             }
                             else if (valor == 4) {
                                 continuar = false;
@@ -337,6 +373,7 @@ public class Main {
                     }
                     else {
                         System.out.println("Vendedor não encontrado.");
+                        valor = 0;
                         break;
                     }
 
@@ -345,7 +382,10 @@ public class Main {
                         System.out.println("<----------------------------->");
                         System.out.println("1 - Adicionar produto");
                         System.out.println("2 - Ver produtos da loja");
-                        System.out.println("3 - Sair");
+                        System.out.println("3 - Alterar valor de um produto");
+                        System.out.println("4 - Repor estoque");
+                        System.out.println("5 - Calcular ganhos");
+                        System.out.println("6 - Sair");
                         System.out.println("<----------------------------->");
                         System.out.print("Digite a sua opção: ");
                         valor = scam.nextInt();
@@ -362,14 +402,30 @@ public class Main {
                             scam.nextLine();  // Consumir o restante da linha
 
                             Produtos novoProduto = new Produtos(nomeProduto, precoProduto, quantidadeEmEstoque, 0);
-                            vendedor.addProducts(loja, novoProduto);  // Método para adicionar o produto na loja
+                            int indi= -1;
+                            for (int i = 0; i < everything.produtos.size(); i++) {
+                                if (Objects.equals(everything.produtos.get(i).getNome(), temp.getNome()) && Objects.equals(everything.produtos.get(i).getNome(), temp.getNome())) {
+                                    indi = i;
+                                }
+                            }
 
-                            System.out.println("Produto adicionado com sucesso!");
+                            Produtos produto;
+
+                            if (indi >= 0) {
+                                produto = everything.produtos.get(ind);
+                                vendedor.addProducts(loja, novoProduto);  // Método para adicionar o produto na loja
+                                System.out.println("O produto " + nomeProduto + " foi adicionado com sucesso à loja!");
+                            }
+                            else {
+                                System.out.println("Produto já existente na loja!");
+                                valor = 0;
+                                break;
+                            }
                         }
                         else if (valor == 2) {
                             // Ver produtos da loja
                             List<Produtos> tempProds = vendedor.accessProducts(everything);
-                            if (tempProds != null) {
+                            try {
                                 System.out.println("Acessando os produtos: ");
                                 System.out.println("<----------------------------->");
                                 for (Produtos produtos : tempProds) {
@@ -377,11 +433,26 @@ public class Main {
                                             + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
                                 }
                                 System.out.println("<----------------------------->");
-                            } else {
-                                System.out.println("Não há produtos disponíveis");
+                            }
+                            catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
+                                System.out.println("Voltanto para o menu principal...");
                             }
                         }
+
                         else if (valor == 3) {
+                            //Implementar lógica 
+                        }
+                        
+                        else if (valor == 4) {
+                            //Implementar lógica 
+                        }
+
+                        else if (valor == 5) {
+                            //Implementar lógica 
+                        }
+
+                        else if (valor == 6) {
                             continuar = false;
                             System.out.println("Voltando para o menu principal...");
                         }
@@ -415,6 +486,7 @@ public class Main {
                     }
                     else {
                         System.out.println("Gerente não encontrado.");
+                        valor = 0;
                         break;
                     }
 
@@ -446,10 +518,13 @@ public class Main {
                             }
                             System.out.println();
 
-//                            gerente.deletarVendedor();
+                            //gerente.deletarVendedor();
                         }
                         else if (valor == 3) {
+                            System.out.println("\n--- Calculando Lucros ---");
+                            System.out.println("Lucro total da loja em reais: R$ ");
                             gerente.calcularLucros(loja);
+                            
                         }
                         else if (valor == 4) {
                             continuar = false;
