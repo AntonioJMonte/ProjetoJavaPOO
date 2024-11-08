@@ -1,2 +1,3 @@
 Sabão:2.70:4:7
 Laranja:3.05:5:9
+Palmeiras: 100.00:5:9

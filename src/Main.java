@@ -179,7 +179,20 @@ public class Main {
 
                             if (valor == 1) {
                                 // Acessar o catálogo de produtos
-                                cliente.accessProducts(everything);
+                                try {
+                                    List <Produtos> produto = cliente.accessProducts(everything);
+                                    System.out.println("Acessando os produtos: ");
+                                    System.out.println("<----------------------------->");
+                                    for (Produtos produtos : produto) {
+                                        System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
+                                                + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+                                    }
+                                    System.out.println("<----------------------------->");
+                                }
+                                catch (RuntimeException e) {
+                                    System.out.println(e.getMessage());
+                                    System.out.println("Voltanto para o menu principal...");
+                                }
                             }
                             else if (valor == 2) {
                                 // Comprar produto
@@ -191,24 +204,37 @@ public class Main {
 
                                 Produtos produtoParaComprar = null;
 
-                                // Buscar produto na loja e realizar a compra
-                                for (int i = 0; i < everything.produtos.size(); i++) {
-                                    Produtos tempProd = everything.produtos.get(i);
-                                    if (tempProd.getNome().equals(nomeProduto)) {
-                                        produtoParaComprar = tempProd;
-                                        break;
+                                try {
+                                    // Buscar produto na loja e realizar a compra
+                                    for (int i = 0; i < everything.produtos.size(); i++) {
+                                        Produtos tempProd = everything.produtos.get(i);
+                                        if (tempProd.getNome().equals(nomeProduto)) {
+                                            produtoParaComprar = tempProd;
+                                            break;
+                                        }
+                                    }
+                                    if (produtoParaComprar != null) {
+                                        cliente.purchaseOption(produtoParaComprar, quantidade);
+                                        double total = quantidade * produtoParaComprar.getPreco();
+                                        System.out.printf("Comprando %d unidades de %s por R$ %.2f\n", quantidade, produtoParaComprar.getNome(), total);
+                                        produtoParaComprar.registrarVenda(quantidade);
+                                    }
+                                    else {
+                                        System.out.println("Produto não encontrado!");
                                     }
                                 }
-                                if (produtoParaComprar != null) {
-                                    cliente.purchaseOption(produtoParaComprar, quantidade);
-                                }
-                                else {
-                                    System.out.println("Produto não encontrado!");
+                                catch (RuntimeException e) {
+                                    System.out.println(e.getMessage());
                                 }
                             }
                             else if (valor == 3) {
                                 // Deletar conta
-                                cliente.deleteAccount(cliente, everything);
+                                if (cliente.deleteAccount(cliente, everything)) {
+                                    System.out.println("Conta deletada com sucesso!");
+                                }
+                                else {
+                                    System.out.println("Erro ao remover a conta!");
+                                }
                                 break;
                             }
                             else if (valor == 4) {
@@ -342,7 +368,18 @@ public class Main {
                         }
                         else if (valor == 2) {
                             // Ver produtos da loja
-                            vendedor.accessProducts(loja);
+                            List<Produtos> tempProds = vendedor.accessProducts(everything);
+                            if (tempProds != null) {
+                                System.out.println("Acessando os produtos: ");
+                                System.out.println("<----------------------------->");
+                                for (Produtos produtos : tempProds) {
+                                    System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
+                                            + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+                                }
+                                System.out.println("<----------------------------->");
+                            } else {
+                                System.out.println("Não há produtos disponíveis");
+                            }
                         }
                         else if (valor == 3) {
                             continuar = false;
@@ -394,10 +431,22 @@ public class Main {
                         scam.nextLine();  // Consumir o restante da linha após nextInt()
 
                         if (valor == 1) {
-                            gerente.criarVendedor();
+                            System.out.println("Digite o nome do vendedor: ");
+                            String nomeVendedor = scam.nextLine();
+
+                            gerente.criarVendedor(nomeVendedor, everything);
                         }
                         else if (valor == 2) {
                             //Lógica para deletar conta
+                            System.out.println("Selecione o vendedor a ser removido:");
+                            int tempInd = 1;
+                            for (Vendedor tempV : everything.vendedores) {
+                                System.out.print("(" + Integer.toString(tempInd) + ") " + tempV.getNome() + " - ");
+                                tempInd++;
+                            }
+                            System.out.println();
+
+//                            gerente.deletarVendedor();
                         }
                         else if (valor == 3) {
                             gerente.calcularLucros(loja);

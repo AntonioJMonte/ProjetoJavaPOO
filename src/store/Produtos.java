@@ -44,9 +44,6 @@ public class Produtos {
         if (preco >= 0) {
             this.preco = preco;
         }
-        else {
-            System.out.println ("O preço não pode ser negativo");
-        }
     }
 
     public void setQuantidadeEmEstoque(int quantidadeEmEstoque) {

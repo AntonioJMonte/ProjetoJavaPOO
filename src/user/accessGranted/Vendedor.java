@@ -1,6 +1,9 @@
+
 package user.accessGranted;
 
 import java.util.List;
+
+import CRUD.CRUD;
 import user.accessGranted.Usuario;
 import store.Loja;
 import store.Produtos;
@@ -19,19 +22,20 @@ public class Vendedor extends Usuario {
     protected void criarConta () {
     }
 
-    public void accessProducts (Loja loja) {
-        List <Produtos> produto = loja.getProdutos();
+    public List<Produtos> accessProducts (CRUD crud) {
+        List<Produtos> produto = crud.produtos;
         if (produto.isEmpty()) {
-            System.out.println("Não há produtos disponíveis");
-        }
-        else {
-            System.out.println("Acessando os produtos: ");
-            for (Produtos produtos : produto) {
-                System.out.println("<----------------------------->");
-                System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
-                        + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
-                System.out.println("<----------------------------->");
-            }
+            return null;
+//            System.out.println("Não há produtos disponíveis");
+        } else {
+//            System.out.println("Acessando os produtos: ");
+//            System.out.println("<----------------------------->");
+//            for (Produtos produtos : produto) {
+//                System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
+//                        + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+//            }
+//            System.out.println("<----------------------------->");
+            return produto;
         }
     }
 
