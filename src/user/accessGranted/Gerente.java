@@ -1,3 +1,4 @@
+
 package user.accessGranted;
 
 import java.io.File;
@@ -22,7 +23,7 @@ public class Gerente extends Usuario {
 
     @Override
     protected void acessarSistema() {
-        System.out.println("Gerente " + nome + " acessou o sistema.");
+        
     }
 
     @Override
@@ -73,20 +74,17 @@ public class Gerente extends Usuario {
             fw.write(String.valueOf(str));
             fw.close();
         } catch (Exception e) {
-            System.out.println("Erro em alguma coisa aq");
+            throw new RuntimeException("Erro ao remover vendedor!");
         }
     }
 
-    public void calcularLucros(Loja loja) {
+    public double calcularLucros(Loja loja) {
         double lucroTotal = 0;
         List<Produtos> produtos = loja.getProdutos();
-        System.out.println("\n--- Calculando Lucros ---");
         for (Produtos produto : produtos) {
             double lucroProduto = produto.getQuantidadeVendida() * produto.getPreco();
-            lucroTotal += lucroProduto;
-            System.out.printf("Produto: %s | Quantidade Vendida: %d | Lucro: R$ %.2f\n",
-                    produto.getNome(), produto.getQuantidadeVendida(), lucroProduto);
+            lucroTotal += lucroProduto;      
         }
-        System.out.printf("Lucro total da loja: R$ %.2f\n", lucroTotal);
+        return lucroTotal;
     }
 }

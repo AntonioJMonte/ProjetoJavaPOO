@@ -1,5 +1,8 @@
+
 package user.accessGranted;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import CRUD.CRUD;
@@ -38,24 +41,38 @@ public class Vendedor extends Usuario {
         }
     }
 
-    public void changePrice (Produtos produto, double novoPreco) {
+    public boolean changePrice (Produtos produto, double novoPreco) {
+        if (novoPreco < 0) return false;
         produto.setPreco(novoPreco);
-        System.out.println("O preço do " + produto.getNome() + " foi atualizado para: R$ " + novoPreco) ;
+        return true;
+//        System.out.println("O preço do " + produto.getNome() + " foi atualizado para: R$ " + novoPreco) ;
     }
 
-    public void stockReplenishment (Produtos produto, int replace) {
-        System.out.println("Quantidade de produtos vendidos: " + produto.getQuantidadeVendida());
+    public boolean stockReplenishment(Produtos produto, int replace) {
+        if (replace < 0) return false;
+//        System.out.println("Quantidade de produtos vendidos: " + produto.getQuantidadeVendida());
         produto.reposicao(replace);
-        System.out.println("Quantida em estoque após a reposição: " + produto.getQuantidadeEmEstoque());
+        return true;
+//        System.out.println("Quantida em estoque após a reposição: " + produto.getQuantidadeEmEstoque());
     }
 
-    public void calculateEarnings (Produtos produto) {
-        double total = (produto.getQuantidadeVendida() * produto.getPreco()) * 0.05;
-        System.out.printf("O ganho em cima das vendas foi de: R$ %.2f \n", total);
+    public double calculateEarnings(CRUD crud) {
+        double total = 0.0;
+        for (Produtos produto : crud.produtos) {
+            total += (produto.getPreco() * produto.getQuantidadeVendida()) * 0.05;
+        }
+        return total;
     }
 
-    public void addProducts (Loja loja, Produtos produto) {
-        loja.adicionarProdutos(produto);
-        System.out.println("O produto " + produto.getNome() + " foi adicionado à loja");
+    public void addProducts(CRUD crud, Produtos produto) {
+        crud.produtos.add(produto);
+
+        try {
+            FileWriter fw = new FileWriter("produtos.txt", true);
+            fw.write('\n' + produto.getNome() + ":" + produto.getPreco() + ":" + produto.getQuantidadeEmEstoque() + ":" + produto.getQuantidadeVendida());
+            fw.close();
+        } catch (IOException e) {
+            // pensa aí patrão, sei oq fzr aq nn
+        }
     }
 }

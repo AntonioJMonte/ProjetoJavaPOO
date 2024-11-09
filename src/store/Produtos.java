@@ -42,11 +42,37 @@ public class Produtos {
 
     public void setPreco (double preco) {
         if (preco >= 0) {
-            this.preco = preco;
+            try {
+                File prods = new File("produtos.txt");
+                Scanner reader = new Scanner(prods);
+
+                StringBuffer str = new StringBuffer();
+                String temp;
+                while (reader.hasNextLine()) {
+                    temp = reader.nextLine();
+                    if (temp.contains(this.getNome()) && temp.contains(Double.toString(this.getPreco()))
+                            && temp.contains(Integer.toString(this.getQuantidadeVendida())) &&
+                            temp.contains(Integer.toString(this.getQuantidadeEmEstoque()))) {
+                        str.append(this.getNome()).append(":").append(preco).append(":")
+                                .append(this.getQuantidadeEmEstoque()).append(":").append(this.getQuantidadeVendida());
+                    } else {
+                        str.append(temp);
+                    }
+                    str.append("\n");
+                }
+
+                FileWriter fr = new FileWriter("produtos.txt");
+                fr.write(str.toString());
+                fr.close();
+            } catch (Exception e) {
+                // sla
+            }
         }
         else {
-            System.out.println ("O preço não pode ser negativo");
+            System.out.println("\u001B[31mEstoque insuficiente para realizar a venda\u001B[m");
         }
+
+        this.preco = preco;
     }
 
     public void setQuantidadeEmEstoque(int quantidadeEmEstoque) {
