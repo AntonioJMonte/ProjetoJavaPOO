@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.*;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import CRUD.CRUD;
 
@@ -402,23 +401,22 @@ public class Main {
                             scam.nextLine();  // Consumir o restante da linha
 
                             Produtos novoProduto = new Produtos(nomeProduto, precoProduto, quantidadeEmEstoque, 0);
-                            int indi= -1;
+                            int indProd = -1;
                             for (int i = 0; i < everything.produtos.size(); i++) {
-                                if (Objects.equals(everything.produtos.get(i).getNome(), temp.getNome()) && Objects.equals(everything.produtos.get(i).getNome(), temp.getNome())) {
-                                    indi = i;
+                                if (Objects.equals(everything.produtos.get(i).getNome(), novoProduto.getNome())
+                                        && Objects.equals(Double.toString(everything.produtos.get(i).getPreco()), Double.toString(novoProduto.getPreco()))
+                                        && Objects.equals(Integer.toString(everything.produtos.get(i).getQuantidadeEmEstoque()), Integer.toString(novoProduto.getQuantidadeEmEstoque()))
+                                        && Objects.equals(Integer.toString(everything.produtos.get(i).getQuantidadeVendida()), Integer.toString(novoProduto.getQuantidadeVendida()))) {
+                                    indProd = i;
                                 }
                             }
 
-                            Produtos produto;
-
-                            if (indi >= 0) {
-                                produto = everything.produtos.get(ind);
-                                vendedor.addProducts(loja, novoProduto);  // Método para adicionar o produto na loja
+                            if (indProd < 0) {
+                                vendedor.addProducts(everything, novoProduto);  // Método para adicionar o produto na loja
                                 System.out.println("O produto " + nomeProduto + " foi adicionado com sucesso à loja!");
                             }
                             else {
                                 System.out.println("Produto já existente na loja!");
-                                valor = 0;
                                 break;
                             }
                         }
@@ -439,19 +437,59 @@ public class Main {
                                 System.out.println("Voltanto para o menu principal...");
                             }
                         }
-
                         else if (valor == 3) {
-                            //Implementar lógica 
+                            System.out.print("Digite o produto a ter o valor trocado: ");
+                            String nomeProd = scam.nextLine();
+
+                            Produtos prodAlt = null;
+                            for (int i = 0; i < everything.produtos.size(); i++) {
+                                if (Objects.equals(everything.produtos.get(i).getNome(), nomeProd)) {
+                                    prodAlt = everything.produtos.get(i);
+                                }
+                            }
+
+                            if (prodAlt != null) {
+                                System.out.print("Digite o novo valor: ");
+                                Double novoPreco = scam.nextDouble();
+
+                                if (vendedor.changePrice(prodAlt, novoPreco)) {
+                                    System.out.println("PREÇO TROCADO");
+                                }
+                                else {
+                                    System.out.println("PREÇO INVÁLIDO");
+                                }
+                            } else {
+                                System.out.println("PRODUTO NÃO EXISTENTE");
+                            }
                         }
-                        
                         else if (valor == 4) {
-                            //Implementar lógica 
-                        }
+                            System.out.print("Digite o produto a ser reposto: ");
+                            String nomeProd = scam.nextLine();
 
+                            Produtos prodAlt = null;
+                            for (int i = 0; i < everything.produtos.size(); i++) {
+                                if (Objects.equals(everything.produtos.get(i).getNome(), nomeProd)) {
+                                    prodAlt = everything.produtos.get(i);
+                                }
+                            }
+
+                            if (prodAlt != null) {
+                                System.out.print("Digite a quantidade: ");
+                                int qtd = scam.nextInt();
+
+                                if (vendedor.stockReplenishment(prodAlt, qtd)) {
+                                    System.out.println("QUANTIDADE ADICIONADA");
+                                }
+                                else {
+                                    System.out.println("QUANTIDADE INVÁLIDA");
+                                }
+                            } else {
+                                System.out.println("PRODUTO NÃO EXISTENTE");
+                            }
+                        }
                         else if (valor == 5) {
-                            //Implementar lógica 
+                            System.out.println(vendedor.calculateEarnings(everything));
                         }
-
                         else if (valor == 6) {
                             continuar = false;
                             System.out.println("Voltando para o menu principal...");
@@ -524,7 +562,6 @@ public class Main {
                             System.out.println("\n--- Calculando Lucros ---");
                             System.out.println("Lucro total da loja em reais: R$ ");
                             gerente.calcularLucros(loja);
-                            
                         }
                         else if (valor == 4) {
                             continuar = false;
