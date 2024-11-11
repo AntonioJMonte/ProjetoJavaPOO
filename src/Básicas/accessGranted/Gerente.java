@@ -1,16 +1,15 @@
 
-package user.accessGranted;
+package Básicas.accessGranted;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import store.Loja;
-import store.Produtos;
 import java.util.Scanner;
 
-import CRUD.CRUD;
+import Dados.Produtos;
+import Dados.CRUD.CRUD;
 
 public class Gerente extends Usuario {
 
@@ -78,9 +77,9 @@ public class Gerente extends Usuario {
         }
     }
 
-    public double calcularLucros(Loja loja) {
+    public double calcularLucros(CRUD crud) {
         double lucroTotal = 0;
-        List<Produtos> produtos = loja.getProdutos();
+        List<Produtos> produtos = crud.produtos;
         for (Produtos produto : produtos) {
             double lucroProduto = produto.getQuantidadeVendida() * produto.getPreco();
             lucroTotal += lucroProduto;      

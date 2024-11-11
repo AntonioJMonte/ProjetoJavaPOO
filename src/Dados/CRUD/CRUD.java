@@ -1,12 +1,11 @@
-package CRUD;
+package Dados.CRUD;
 
 import java.util.List;
 
-import store.Produtos;
-import store.Loja;
-import user.accessGranted.Gerente;
-import user.accessGranted.Vendedor;
-import user.client.Cliente;
+import Básicas.accessGranted.Gerente;
+import Básicas.accessGranted.Vendedor;
+import Básicas.client.Cliente;
+import Dados.Produtos;
 
 public class CRUD {
     public List<Produtos> produtos;

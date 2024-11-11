@@ -1,14 +1,13 @@
-package user.client;
+package Básicas.client;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 import java.util.Scanner;
-import user.accessGranted.Usuario;
-import store.Loja;
-import store.Produtos;
 
-import CRUD.CRUD;
+import Básicas.accessGranted.Usuario;
+import Dados.Produtos;
+import Dados.CRUD.CRUD;
 
 public class Cliente extends Usuario {
 

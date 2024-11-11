@@ -1,17 +1,16 @@
-import store.Loja;
-import store.Produtos;
-import user.accessGranted.Gerente;
-import user.accessGranted.Vendedor;
-import user.client.Cliente;
-
+package Interface;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-import java.io.File;
+import Básicas.accessGranted.Gerente;
+import Básicas.accessGranted.Vendedor;
+import Básicas.client.Cliente;
+import Dados.Produtos;
+import Dados.CRUD.CRUD;
 
-import CRUD.CRUD;
+import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
@@ -93,7 +92,7 @@ public class Main {
             System.out.println();
         }
 
-        Loja loja = new Loja(new ArrayList<>());
+        //Loja loja = new Loja(new ArrayList<>());
         CRUD everything = new CRUD(pr, cl, ve, ge);
 
         boolean prosseguir = true;
@@ -499,7 +498,8 @@ public class Main {
                     break;
 
                 // Login como gerente
-                case 3:
+                case 3:    
+                    
                     String nomeDoGerente;
                     String emailGerente;
 
@@ -559,9 +559,9 @@ public class Main {
                             //gerente.deletarVendedor();
                         }
                         else if (valor == 3) {
+
                             System.out.println("\n--- Calculando Lucros ---");
-                            System.out.println("Lucro total da loja em reais: R$ ");
-                            gerente.calcularLucros(loja);
+                            System.out.println("Lucro total da loja em reais: R$ " + gerente.calcularLucros(everything));
                         }
                         else if (valor == 4) {
                             continuar = false;

@@ -1,4 +1,4 @@
-package user.accessGranted;
+package Básicas.accessGranted;
 
 public abstract class Usuario {
     protected String nome;

@@ -1,15 +1,14 @@
 
-package user.accessGranted;
+package Básicas.accessGranted;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-
-import CRUD.CRUD;
-import user.accessGranted.Usuario;
-import store.Loja;
-import store.Produtos;
 import java.util.Scanner;
+
+import Básicas.accessGranted.Usuario;
+import Dados.Produtos;
+import Dados.CRUD.CRUD;
 
 public class Vendedor extends Usuario {
     public Vendedor (String nome, String email) {
