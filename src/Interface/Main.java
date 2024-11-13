@@ -101,19 +101,13 @@ public class Main {
         
         while (prosseguir) {
             interfaceVisual.menuPrincipal();
-           /*System.out.println("<----------------------------->");
-            System.out.println("1 - Login como cliente");
-            System.out.println("2 - Login como vendedor");
-            System.out.println("3 - Login como gerente");
-            System.out.println("4 - Finalizar programa");
-            System.out.println("<----------------------------->"); */ 
 
             while (valor < 1 || valor > 4) {
                 try {
                     valor = scam.nextInt();
                     scam.nextLine();  // Consumir o restante da linha após nextInt()
                 } catch (InputMismatchException e) {
-                    System.out.println("Erro!!! Valor digitado de tipo inválido. Finalizando...");
+                    interfaceVisual.msgErroTipo();
                     System.exit(-20);
                 }
             }
@@ -128,18 +122,11 @@ public class Main {
                     interfaceVisual.menuCliente();
                     validar = scam.nextInt();
                     scam.nextLine();  // Consumir o restante da linha após nextInt()
-                
-                    
-                    /*System.out.println("1 - Login com conta existente; ");
-                    System.out.println("2 - Criar conta; ");
-                    System.out.println("Digite sua escolha: ");
-                    validar = scam.nextInt();
-                    scam.nextLine();*/
 
                     //Login com conta existente
                     if (validar == 1) {
                         if (everything.clientes.isEmpty()) {
-                            System.out.println("Não existem contas cadastradas no sistema. Por gentileza, crie uma nova conta.");
+                            interfaceVisual.msgSemClientes();
                             try {
                                 Thread.sleep(1000);
                             } catch (InterruptedException ex) {}
@@ -164,10 +151,10 @@ public class Main {
                         // Criar o objeto cliente com os dados fornecidos
                         if (ind >= 0) {
                             cliente = everything.clientes.get(ind);
-                            System.out.println("Login feito com sucesso como Cliente!");
+                            interfaceVisual.msgSucessoLogin();
                         }
                         else {
-                            System.out.println("Elemento não encontrado.");
+                            interfaceVisual.msgErroLoginCliente();
                             break;
                         }
 
@@ -191,14 +178,13 @@ public class Main {
                                 }
                                 catch (RuntimeException e) {
                                     System.out.println(e.getMessage());
-                                    System.out.println("Voltanto para o menu principal...");
                                 }
                             }
                             else if (valor == 2) {
                                 // Comprar produto
                                 interfaceVisual.nomeDoProduto();
                                 String nomeProduto = scam.nextLine();
-                                interfaceVisual.quantidadeProduto();
+                                interfaceVisual.quantidadeDeCompra();
                                 int quantidade = scam.nextInt();
                                 scam.nextLine();  // Consumir o restante da linha
 
@@ -291,7 +277,7 @@ public class Main {
                                 // Comprar produto
                                 interfaceVisual.nomeDoProduto();
                                 String nomeProduto = scam.nextLine();
-                                interfaceVisual.quantidadeProduto();
+                                interfaceVisual.quantidadeDeCompra();
                                 int quantidade = scam.nextInt();
                                 scam.nextLine();  // Consumir o restante da linha
 
@@ -323,7 +309,7 @@ public class Main {
                             else if (valor == 3) {
                                 // Deletar conta
                                 if (cliente.deleteAccount(cliente, everything)) {
-                                    System.out.println("Conta deletada com sucesso!");
+                                    interfaceVisual.msgSucessoDel();
                                 }
                                 else {
                                     System.out.println("Erro ao remover a conta!");
@@ -381,7 +367,7 @@ public class Main {
                             String nomeProduto = scam.nextLine();
                             interfaceVisual.precoDoProduto();
                             double precoProduto = scam.nextDouble();
-                            interfaceVisual.quantidadeProduto();
+                            interfaceVisual.quantidadeAdd();
                             int quantidadeEmEstoque = scam.nextInt();
                             scam.nextLine();  // Consumir o restante da linha
 
@@ -423,7 +409,7 @@ public class Main {
                             }
                         }
                         else if (valor == 3) {
-                            System.out.print("Digite o produto a ter o valor trocado: ");
+                            interfaceVisual.nomeDoProduto();
                             String nomeProd = scam.nextLine();
 
                             Produtos prodAlt = null;
@@ -434,7 +420,7 @@ public class Main {
                             }
 
                             if (prodAlt != null) {
-                                System.out.print("Digite o novo valor: ");
+                                interfaceVisual.novoPrecoProduto();
                                 Double novoPreco = scam.nextDouble();
 
                                 if (vendedor.changePrice(prodAlt, novoPreco)) {
@@ -448,7 +434,7 @@ public class Main {
                             }
                         }
                         else if (valor == 4) {
-                            System.out.print("Digite o produto a ser reposto: ");
+                            interfaceVisual.nomeDoProduto();
                             String nomeProd = scam.nextLine();
 
                             Produtos prodAlt = null;
@@ -459,7 +445,7 @@ public class Main {
                             }
 
                             if (prodAlt != null) {
-                                System.out.print("Digite a quantidade: ");
+                                interfaceVisual.quantidadeRepor();;
                                 int qtd = scam.nextInt();
 
                                 if (vendedor.stockReplenishment(prodAlt, qtd)) {
@@ -489,9 +475,9 @@ public class Main {
                     String nomeDoGerente;
                     String emailGerente;
 
-                    System.out.println("Digite seu nome: ");
+                    interfaceVisual.nomeUsuario();
                     nomeDoGerente = scam.nextLine();
-                    System.out.println("Digite seu email: ");
+                    interfaceVisual.emailUsuario();
                     emailGerente = scam.nextLine();
 
                     Gerente tempGer = new Gerente(nomeDoGerente, emailGerente);
@@ -516,18 +502,12 @@ public class Main {
 
                     continuar = true;
                     while (continuar) {
-                        System.out.println("<----------------------------->");
-                        System.out.println("1 - Contratar vendedor");
-                        System.out.println("2 - Demitir vendedor");
-                        System.out.println("3 - Calcular lucros");
-                        System.out.println("4 - Sair");
-                        System.out.println("<----------------------------->");
-                        System.out.print("Digite a sua opção: ");
+                        interfaceVisual.opcoesGerente();
                         valor = scam.nextInt();
                         scam.nextLine();  // Consumir o restante da linha após nextInt()
 
                         if (valor == 1) {
-                            System.out.println("Digite o nome do vendedor: ");
+                            interfaceVisual.nomeDoContratado();
                             String nomeVendedor = scam.nextLine();
 
                             gerente.criarVendedor(nomeVendedor, everything);
@@ -540,7 +520,8 @@ public class Main {
                                 System.out.print("(" + Integer.toString(tempInd) + ") " + tempV.getNome() + " - ");
                                 tempInd++;
                             }
-                            System.out.println();
+                            valor = scam.nextInt();
+                            scam.nextLine();
 
                             //gerente.deletarVendedor();
                         }

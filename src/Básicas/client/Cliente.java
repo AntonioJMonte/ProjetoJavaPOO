@@ -38,7 +38,7 @@ public class Cliente extends Usuario {
 
     public List<Produtos> accessProducts(CRUD crud) {
         if (crud.produtos.isEmpty()) {
-            throw new RuntimeException("Não há produtos disponíveis");
+            throw new RuntimeException("Não há produtos disponíveis...Voltanto para o menu principal...");
         }
         return crud.produtos;
     }
