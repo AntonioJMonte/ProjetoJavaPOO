@@ -9,6 +9,7 @@ import Básicas.accessGranted.Vendedor;
 import Básicas.client.Cliente;
 import Dados.Produtos;
 import Dados.CRUD.CRUD;
+import Interface.InterfaceVisual;
 
 import java.io.File;
 
@@ -94,18 +95,20 @@ public class Main {
 
         //Loja loja = new Loja(new ArrayList<>());
         CRUD everything = new CRUD(pr, cl, ve, ge);
+        InterfaceVisual interfaceVisual = new InterfaceVisual();
 
         boolean prosseguir = true;
+        
         while (prosseguir) {
-            System.out.println("<----------------------------->");
+            interfaceVisual.menuPrincipal();
+           /*System.out.println("<----------------------------->");
             System.out.println("1 - Login como cliente");
             System.out.println("2 - Login como vendedor");
             System.out.println("3 - Login como gerente");
             System.out.println("4 - Finalizar programa");
-            System.out.println("<----------------------------->");
+            System.out.println("<----------------------------->"); */ 
 
             while (valor < 1 || valor > 4) {
-                System.out.print("Digite a sua opção: ");
                 try {
                     valor = scam.nextInt();
                     scam.nextLine();  // Consumir o restante da linha após nextInt()
@@ -122,11 +125,16 @@ public class Main {
                     String emailCliente;
                     int validar = 0;
 
-                    System.out.println("1 - Login com conta existente; ");
+                    interfaceVisual.menuCliente();
+                    validar = scam.nextInt();
+                    scam.nextLine();  // Consumir o restante da linha após nextInt()
+                
+                    
+                    /*System.out.println("1 - Login com conta existente; ");
                     System.out.println("2 - Criar conta; ");
                     System.out.println("Digite sua escolha: ");
                     validar = scam.nextInt();
-                    scam.nextLine();
+                    scam.nextLine();*/
 
                     //Login com conta existente
                     if (validar == 1) {
@@ -138,9 +146,9 @@ public class Main {
                             break;
                         }
                         // Inserir os dados de login do cliente
-                        System.out.print("Digite seu nome: ");
+                        interfaceVisual.nomeUsuario();
                         nomeDoCliente = scam.nextLine();
-                        System.out.print("Digite seu email: ");
+                        interfaceVisual.emailUsuario();
                         emailCliente = scam.nextLine();
 
                         Cliente temp = new Cliente(nomeDoCliente, emailCliente);
@@ -165,13 +173,7 @@ public class Main {
 
                         continuar = true;
                         while (continuar) {
-                            System.out.println("<----------------------------->");
-                            System.out.println("1 - Acessar catálogo de produtos");
-                            System.out.println("2 - Comprar produto");
-                            System.out.println("3 - Deletar conta");
-                            System.out.println("4 - Sair");
-                            System.out.println("<----------------------------->");
-                            System.out.print("Digite a sua opção: ");
+                            interfaceVisual.opcoesCliente();
                             valor = scam.nextInt();
                             scam.nextLine();  // Consumir o restante da linha após nextInt()
 
@@ -183,9 +185,9 @@ public class Main {
                                     System.out.println("<----------------------------->");
                                     for (Produtos produtos : produto) {
                                         System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
-                                                + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+                                        + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
                                     }
-                                    System.out.println("<----------------------------->");
+                                    System.out.println("<----------------------------->");  
                                 }
                                 catch (RuntimeException e) {
                                     System.out.println(e.getMessage());
@@ -194,9 +196,9 @@ public class Main {
                             }
                             else if (valor == 2) {
                                 // Comprar produto
-                                System.out.print("Digite o nome do produto que deseja comprar: ");
+                                interfaceVisual.nomeDoProduto();
                                 String nomeProduto = scam.nextLine();
-                                System.out.print("Digite a quantidade que deseja comprar: ");
+                                interfaceVisual.quantidadeProduto();
                                 int quantidade = scam.nextInt();
                                 scam.nextLine();  // Consumir o restante da linha
 
@@ -242,9 +244,9 @@ public class Main {
                         }
                     }
                     else if (validar == 2) {
-                        System.out.print("Digite o nome de usuário: ");
+                        interfaceVisual.nomeCadastro();
                         nomeDoCliente = scam.nextLine();
-                        System.out.print("Digite o email a ser cadastrado: ");
+                        interfaceVisual.emailCadastro();
                         emailCliente = scam.nextLine();
 
                         Cliente newCliente = Cliente.createProfile(nomeDoCliente, emailCliente);
@@ -262,14 +264,9 @@ public class Main {
                         System.out.println("Seja bem-vindo " + nomeDoCliente + "! Agora escolha uma das opções a seguir: ");
                         continuar = true;
                         Cliente cliente = new Cliente(nomeDoCliente, emailCliente);
+                        continuar = true;
                         while (continuar) {
-                            System.out.println("<----------------------------->");
-                            System.out.println("1 - Acessar catálogo de produtos");
-                            System.out.println("2 - Comprar produto");
-                            System.out.println("3 - Deletar conta");
-                            System.out.println("4 - Sair");
-                            System.out.println("<----------------------------->");
-                            System.out.print("Digite a sua opção: ");
+                            interfaceVisual.opcoesCliente();
                             valor = scam.nextInt();
                             scam.nextLine();  // Consumir o restante da linha após nextInt()
 
@@ -281,9 +278,9 @@ public class Main {
                                     System.out.println("<----------------------------->");
                                     for (Produtos produtos : produto) {
                                         System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
-                                                + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
+                                        + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
                                     }
-                                    System.out.println("<----------------------------->");
+                                    System.out.println("<----------------------------->");  
                                 }
                                 catch (RuntimeException e) {
                                     System.out.println(e.getMessage());
@@ -292,9 +289,9 @@ public class Main {
                             }
                             else if (valor == 2) {
                                 // Comprar produto
-                                System.out.print("Digite o nome do produto que deseja comprar: ");
+                                interfaceVisual.nomeDoProduto();
                                 String nomeProduto = scam.nextLine();
-                                System.out.print("Digite a quantidade que deseja comprar: ");
+                                interfaceVisual.quantidadeProduto();
                                 int quantidade = scam.nextInt();
                                 scam.nextLine();  // Consumir o restante da linha
 
@@ -339,9 +336,6 @@ public class Main {
                             }
                         }
                     }
-                    else {
-                        System.out.println("Por favor, digite um número válido.");
-                    }
                     valor = 0;
                     break;
 
@@ -350,9 +344,9 @@ public class Main {
                     String nomeDoVendedor;
                     String emailVendedor;
 
-                    System.out.print("Digite seu nome: ");
+                    interfaceVisual.nomeUsuario();
                     nomeDoVendedor = scam.nextLine();
-                    System.out.print("Digite seu email: ");
+                    interfaceVisual.emailUsuario();
                     emailVendedor = scam.nextLine();
 
                     Vendedor temp = new Vendedor(nomeDoVendedor, emailVendedor);
@@ -377,25 +371,17 @@ public class Main {
 
                     continuar = true;
                     while (continuar) {
-                        System.out.println("<----------------------------->");
-                        System.out.println("1 - Adicionar produto");
-                        System.out.println("2 - Ver produtos da loja");
-                        System.out.println("3 - Alterar valor de um produto");
-                        System.out.println("4 - Repor estoque");
-                        System.out.println("5 - Calcular ganhos");
-                        System.out.println("6 - Sair");
-                        System.out.println("<----------------------------->");
-                        System.out.print("Digite a sua opção: ");
+                        interfaceVisual.opcoesVendedor();
                         valor = scam.nextInt();
                         scam.nextLine();  // Consumir o restante da linha após nextInt()
 
                         if (valor == 1) {
                             // Adicionando um novo produto
-                            System.out.print("Digite o nome do produto: ");
+                            interfaceVisual.nomeDoProduto();
                             String nomeProduto = scam.nextLine();
-                            System.out.print("Digite o preço do produto: ");
+                            interfaceVisual.precoDoProduto();
                             double precoProduto = scam.nextDouble();
-                            System.out.print("Digite a quantidade em estoque: ");
+                            interfaceVisual.quantidadeProduto();
                             int quantidadeEmEstoque = scam.nextInt();
                             scam.nextLine();  // Consumir o restante da linha
 

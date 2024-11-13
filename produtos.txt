@@ -1,4 +1,4 @@
 Sabão:2.70:4:7
 Laranja:3.05:5:9
-Palmeiras:100.00:5:9
+Palmeiras:100.0:3:11
 Miojo:3.5:4:0
