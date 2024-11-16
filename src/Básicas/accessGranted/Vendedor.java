@@ -25,19 +25,10 @@ public class Vendedor extends Usuario {
 
     public List<Produtos> accessProducts (CRUD crud) {
         List<Produtos> produto = crud.produtos;
-        if (produto.isEmpty()) {
-            return null;
-//            System.out.println("Não há produtos disponíveis");
-        } else {
-//            System.out.println("Acessando os produtos: ");
-//            System.out.println("<----------------------------->");
-//            for (Produtos produtos : produto) {
-//                System.out.println("Nome: " +  produtos.getNome() + ", Preço: " + produtos.getPreco()
-//                        + ", Quantidade em estoque: " + produtos.getQuantidadeEmEstoque());
-//            }
-//            System.out.println("<----------------------------->");
-            return produto;
+        if (crud.produtos.isEmpty()) {
+            throw new RuntimeException("Não há produtos disponíveis...Voltanto para o menu principal...");
         }
+        return crud.produtos;
     }
 
     public boolean changePrice (Produtos produto, double novoPreco) {
