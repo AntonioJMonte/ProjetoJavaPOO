@@ -234,7 +234,7 @@ public class Main {
 
                         try {
                             FileWriter fw = new FileWriter("contasClientes.txt", true);
-                            fw.write(nomeDoCliente + ":" + emailCliente);
+                            fw.write('\n' + nomeDoCliente + ":" + emailCliente);
                             fw.close();
                         } catch (IOException e) {
                             System.out.println("Erro ao guardar cliente. Encerrando...");
