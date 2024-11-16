@@ -1,3 +1,4 @@
+
 package Interface;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -155,6 +156,7 @@ public class Main {
                         }
                         else {
                             interfaceVisual.msgErroLoginCliente();
+                            valor = 0;
                             break;
                         }
 
@@ -439,7 +441,7 @@ public class Main {
                             }
                         }
                         else if (valor == 5) {
-                            System.out.println(vendedor.calculateEarnings(everything));
+                            interfaceVisual.lucroVendedor(vendedor, everything);
                         }
                         else if (valor == 6) {
                             continuar = false;
