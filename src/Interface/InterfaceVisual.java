@@ -1,17 +1,14 @@
+
 package Interface;
 
 import java.util.List;
-import java.util.Scanner;
 
 import Básicas.accessGranted.Vendedor;
 import Dados.Produtos;
+import Dados.CRUD.CRUD;
 
 public class InterfaceVisual {
     
-    Scanner scam = new Scanner(System.in);
-    int validar;
-    int valor;
-
     // Menus existentes
     public void menuPrincipal () {
         System.out.println("<----------------------------->");
@@ -194,6 +191,7 @@ public class InterfaceVisual {
         System.out.println("Selecione o vendedor a ser removido:");
     }
 
+    
     public void exibirListaVendedores(List<Vendedor> vendedores) {
         int tempInd = 1;
         for (Vendedor tempV : vendedores) {
@@ -201,6 +199,10 @@ public class InterfaceVisual {
             tempInd++;
         }
         System.out.println();  // Pula linha após a lista de vendedores
+    }
+    
+    public void lucroVendedor (Vendedor vendedor ,CRUD crud) {
+        System.out.println("Lucro do vendedor " + vendedor.getNome() + ": R$" + vendedor.calculateEarnings(crud));
     }
 
     public void calculandoLucros() {
