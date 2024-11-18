@@ -55,6 +55,7 @@ public class Main {
         int valor = 0;
         boolean continuar = false;
 
+        // define listas de cada classe para serem armazenados
         List<Cliente> cl = new ArrayList<Cliente>();
         List<Vendedor> ve = new ArrayList<Vendedor>();
         List<Gerente> ge = new ArrayList<Gerente>();
@@ -67,24 +68,28 @@ public class Main {
             File prod = new File("produtos.txt");
             Scanner reader = new Scanner(client);
             while (reader.hasNextLine()) {
+                // nome:email
                 String[] tempStr = reader.nextLine().split(":");
                 Cliente temp = new Cliente(tempStr[0], tempStr[1]);
                 cl.add(temp);
             }
             reader = new Scanner(vend);
             while (reader.hasNextLine()) {
+                // nome:email
                 String[] tempStr = reader.nextLine().split(":");
                 Vendedor temp = new Vendedor(tempStr[0], tempStr[1]);
                 ve.add(temp);
             }
             reader = new Scanner(ger);
             while (reader.hasNextLine()) {
+                // nome:email
                 String[] tempStr = reader.nextLine().split(":");
                 Gerente temp = new Gerente(tempStr[0], tempStr[1]);
                 ge.add(temp);
             }
             reader = new Scanner(prod);
             while (reader.hasNextLine()) {
+                // nome:preço:quantidade em estoque:quantidade vendida
                 String[] tempStr = reader.nextLine().split(":", 4);
                 Produtos temp = new Produtos(tempStr[0], Double.parseDouble(tempStr[1]),
                         Integer.parseInt(tempStr[2]), Integer.parseInt(tempStr[3])); // nome:preço:estoque:vendidos
@@ -94,8 +99,9 @@ public class Main {
             System.out.println();
         }
 
-        //Loja loja = new Loja(new ArrayList<>());
         CRUD everything = new CRUD(pr, cl, ve, ge);
+
+        // interface geral do programa, responsável por todas as telas
         InterfaceVisual interfaceVisual = new InterfaceVisual();
 
         boolean prosseguir = true;
@@ -126,6 +132,7 @@ public class Main {
 
                     //Login com conta existente
                     if (validar == 1) {
+                        // checa se existem clientes
                         if (everything.clientes.isEmpty()) {
                             interfaceVisual.msgSemClientes();
                             try {
@@ -133,6 +140,7 @@ public class Main {
                             } catch (InterruptedException ex) {}
                             break;
                         }
+
                         // Inserir os dados de login do cliente
                         interfaceVisual.nomeUsuario();
                         nomeDoCliente = scam.nextLine();
@@ -141,6 +149,8 @@ public class Main {
 
                         Cliente temp = new Cliente(nomeDoCliente, emailCliente);
                         int ind = -1;
+                        
+                        // retorna o índice da lista de clientes que possui os dados iguais aos fornecidos
                         for (int i = 0; i < everything.clientes.size(); i++) {
                             if (Objects.equals(everything.clientes.get(i).getNome(), temp.getNome()) && Objects.equals(everything.clientes.get(i).getEmail(), temp.getEmail())) {
                                 ind = i;
