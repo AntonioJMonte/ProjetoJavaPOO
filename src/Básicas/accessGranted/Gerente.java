@@ -43,7 +43,6 @@ public class Gerente extends Usuario {
             fw.write('\n' + nomeVendedor + ":" + emailVendedor);
             fw.close();
         } catch (IOException e) {
-            // pensa aí patrão, sei oq fzr aq nn
         }
 
         crud.vendedores.add(novoVendedor);
@@ -52,9 +51,6 @@ public class Gerente extends Usuario {
 
 
     public void deletarVendedor(Vendedor vendedorRemovido, CRUD crud) {
-//        System.out.println("O vendedor " + vendedor.nome + " foi removido.");
-        // Aqui poderia remover o vendedor de uma lista de vendedores.
-
         vendedores.remove(vendedorRemovido);
 
         try {

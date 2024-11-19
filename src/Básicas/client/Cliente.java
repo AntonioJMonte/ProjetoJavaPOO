@@ -21,19 +21,6 @@ public class Cliente extends Usuario {
 
     @Override
     public void criarConta () {
-        /*Scanner scam = new Scanner(System.in);
-
-        System.out.println("<--- Criando conta do cliente --->");
-
-        System.out.println("Digite seu nome: ");
-        String nome = scam.nextLine();
-        setNomeUsuario(nome);
-
-        System.out.println("Digite seu email: ");
-        String email = scam.nextLine();
-        setEmail(email);
-
-        System.out.println("Conta criada com sucesso! Seja bem-vindo " + nome);*/
     }
 
     public List<Produtos> accessProducts(CRUD crud) {
