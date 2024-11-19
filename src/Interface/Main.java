@@ -1,4 +1,4 @@
-
+// Guido Xenofonte e Antônio Monteiro
 package Interface;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -507,11 +507,13 @@ public class Main {
                         else if (valor == 2) {
                             //Lógica para deletar conta
                             interfaceVisual.solicitacaoSelecaoVendedor();
-                            interfaceVisual.exibirListaVendedores (everything.vendedores);
+                            interfaceVisual.exibirListaVendedores(everything.vendedores);
                             valor = scam.nextInt();
                             scam.nextLine();
 
-                            //gerente.deletarVendedor();
+                            Vendedor remover = everything.vendedores.get(valor-1);
+
+                            gerente.deletarVendedor(remover, everything);
                         }
                         else if (valor == 3) {
 
